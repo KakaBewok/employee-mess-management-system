@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('room_allocations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('room_id')->constrained()->onDelete('cascade');
+            $table->foreignId('employee_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('guest_id')->nullable()->constrained()->onDelete('cascade');
+            $table->timestamp('allocated_at');
+            $table->timestamp('released_at')->nullable();
             $table->timestamps();
         });
     }

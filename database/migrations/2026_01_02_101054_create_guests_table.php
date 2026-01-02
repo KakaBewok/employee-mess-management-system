@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->date('visit_date');
             $table->timestamps();
         });
     }

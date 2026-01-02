@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+            $table->string('room_code')->unique();
+            $table->integer('capacity');
+            $table->enum('status', ['empty', 'occupied'])->default('empty');
             $table->timestamps();
         });
     }
