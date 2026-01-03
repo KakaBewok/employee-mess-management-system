@@ -4,6 +4,17 @@
 
 ---
 
+## Screenshots
+
+![Home Page](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431047/personal/itci/root_sf9eqc.png)
+![Login](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431146/personal/itci/login_zxamqv.png)
+![Dashboard](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431145/personal/itci/dashboard_vzo5kb.png)
+![Table](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431176/personal/itci/table_hdkv2u.png)
+![Chart](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431198/personal/itci/cart_oxk0sp.png)
+![Pivot Grid](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431175/personal/itci/pivot_k17u8p.png)
+![Allocation Page](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431197/personal/itci/allocate_lhncmo.png)
+![Guest](https://res.cloudinary.com/dk16ng09n/image/upload/v1767431199/personal/itci/guest_gcgb9k.png)
+
 ## 1. SYSTEM OVERVIEW
 
 The Employee and Mess Room Management System is a web-based application built with Laravel that manages employee records, room allocations, and guest accommodations for a company facility. The system provides a centralized platform for administrators to track employee information, manage room inventory, and allocate rooms to both employees and guests efficiently.
@@ -364,6 +375,9 @@ php artisan db:seed
 ### Step 4: Access System
 
 ```
+running with:
+npm run start
+
 URL: http://localhost:8000
 Admin Email: admin@example.com
 Password: password
