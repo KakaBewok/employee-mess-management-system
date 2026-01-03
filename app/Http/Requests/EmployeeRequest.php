@@ -23,36 +23,19 @@ class EmployeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $employeeId = $this->route('employee')?->id;
+        $isUpdate = $this->isMethod('PUT') || $this->isMethod('PATCH');
 
         return [
             'employee_code' => [
-                'required',
+                $isUpdate ? 'required' : 'prohibited',
                 'string',
-                'min:3',
-                'max:50',
-                'regex:/^[A-Z0-9\-_]+$/',
                 Rule::unique('employees', 'employee_code')
-                    ->ignore($employeeId)
-                    ->whereNull('deleted_at'),
+                    ->ignore($this->route('employee')?->id),
             ],
-            'name' => [
-                'required',
-                'string',
-                'min:2',
-                'max:255',
-                'regex:/^[A-Za-z\s]+$/',
-            ],
-            'department' => [
-                'required',
-                'string',
-                Rule::in(array_keys(Employee::DEPARTMENTS)),
-            ],
-            'status' => [
-                'required',
-                'string',
-                Rule::in([Employee::STATUS_ACTIVE, Employee::STATUS_INACTIVE]),
-            ],
+
+            'name' => ['required', 'string'],
+            'department' => ['required'],
+            'status' => ['required'],
         ];
     }
 

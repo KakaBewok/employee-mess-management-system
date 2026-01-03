@@ -16,10 +16,6 @@
                             <select name="room_id" id="room_id" class="w-full border-gray-300 rounded-md shadow-sm"
                                 required>
                                 <option value="">Select Room</option>
-                                {{-- @foreach ($rooms as $room)
-                                    <option value="{{ $room->id }}">{{ $room->room_code }} (Capacity:
-                                        {{ $room->capacity }})</option>
-                                @endforeach --}}
                                 @foreach ($rooms as $room)
                                     <option value="{{ $room['id'] }}">
                                         {{ $room['display_text'] }}
@@ -123,8 +119,8 @@
                                                     'content')
                                             },
                                             success: function(response) {
-                                                allocationGrid.dxDataGrid(
-                                                    "instance").refresh();
+                                                allocationGrid.getDataSource()
+                                                    .reload();
                                                 showMessage(
                                                     "Allocation released successfully!",
                                                     "success");

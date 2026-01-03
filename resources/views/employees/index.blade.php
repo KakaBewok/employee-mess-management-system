@@ -148,7 +148,7 @@
                             height: 400
                         },
                         form: {
-                            items: ["employee_code", "name", "department", "status"]
+                            items: ["name", "department", "status"]
                         }
                     },
                     paging: {

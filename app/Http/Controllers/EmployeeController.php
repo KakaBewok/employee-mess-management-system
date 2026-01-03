@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\EmployeeStoreRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
+use App\Models\Employee;
+use App\Support\CodeGenerator;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Exception;
 
 class EmployeeController extends Controller
 {
@@ -47,20 +50,25 @@ class EmployeeController extends Controller
     /**
      * Store a new employee
      */
-    public function store(EmployeeRequest $request): JsonResponse
+    public function store(EmployeeStoreRequest $request): JsonResponse
     {
         try {
             DB::beginTransaction();
 
-            $employee = Employee::create($request->validated());
+            $employee = Employee::create(
+                array_merge(
+                    $request->validated(),
+                    [
+                        'employee_code' => CodeGenerator::generate(
+                            'employees',
+                            'employee_code',
+                            'EMP'
+                        ),
+                    ]
+                )
+            );
 
             DB::commit();
-
-            Log::info('Employee created', [
-                'employee_id' => $employee->id,
-                'employee_code' => $employee->employee_code,
-                'user_id' => auth()->id()
-            ]);
 
             return response()->json([
                 'message' => 'Employee created successfully.',
@@ -69,10 +77,11 @@ class EmployeeController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
+
             Log::error('Error creating employee: ' . $e->getMessage());
-            
+
             return response()->json([
-                'error' => 'Failed to create employee. Please try again.'
+                'error' => 'Failed to create employee.'
             ], 500);
         }
     }
@@ -105,7 +114,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified employee
      */
-    public function update(EmployeeRequest $request, Employee $employee): JsonResponse
+    public function update(EmployeeUpdateRequest $request, Employee $employee): JsonResponse
     {
         try {
             DB::beginTransaction();
@@ -117,7 +126,7 @@ class EmployeeController extends Controller
             Log::info('Employee updated', [
                 'employee_id' => $employee->id,
                 'employee_code' => $employee->employee_code,
-                'user_id' => auth()->id()
+                // 'user_id' => auth()->id()
             ]);
 
             return response()->json([
@@ -157,7 +166,6 @@ class EmployeeController extends Controller
 
             Log::info('Employee deleted', [
                 'employee_code' => $employeeCode,
-                'user_id' => auth()->id()
             ]);
 
             return response()->json([

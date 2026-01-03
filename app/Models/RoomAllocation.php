@@ -20,7 +20,6 @@ class RoomAllocation extends Model
         'guest_id',
         'allocated_at',
         'released_at',
-        'notes',
     ];
 
     /**

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomRequest;
+use App\Http\Requests\RoomStoreRequest;
+use App\Http\Requests\RoomUpdateRequest;
 use App\Models\Room;
+use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Exception;
 
 class RoomController extends Controller
 {
@@ -67,7 +68,7 @@ class RoomController extends Controller
     /**
      * Store a new room
      */
-    public function store(RoomRequest $request): JsonResponse
+    public function store(RoomStoreRequest $request): JsonResponse
     {
         try {
             DB::beginTransaction();
@@ -82,7 +83,6 @@ class RoomController extends Controller
             Log::info('Room created', [
                 'room_id' => $room->id,
                 'room_code' => $room->room_code,
-                'user_id' => auth()->id()
             ]);
 
             return response()->json([
@@ -133,7 +133,7 @@ class RoomController extends Controller
     /**
      * Update the specified room
      */
-    public function update(RoomRequest $request, Room $room): JsonResponse
+    public function update(RoomUpdateRequest $request, Room $room): JsonResponse
     {
         try {
             DB::beginTransaction();
@@ -155,7 +155,6 @@ class RoomController extends Controller
             Log::info('Room updated', [
                 'room_id' => $room->id,
                 'room_code' => $room->room_code,
-                'user_id' => auth()->id()
             ]);
 
             return response()->json([
@@ -195,7 +194,6 @@ class RoomController extends Controller
 
             Log::info('Room deleted', [
                 'room_code' => $roomCode,
-                'user_id' => auth()->id()
             ]);
 
             return response()->json([
